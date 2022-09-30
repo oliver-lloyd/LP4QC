@@ -9,6 +9,9 @@ do
     do
         for direction in forwards backwards
         do
+        outfile=$direction\_p$p\_q$q\.nodevectors
+        if ! ls embeds/nodes | grep $outfile
+        then
             python ../node_embed.py \
             ../../../data/processed/subgraphs/mreve_100_nodes.csv \
             --weight_var abs_effect\
@@ -19,6 +22,9 @@ do
             --walk_length 25 \
             --walks_per_node 10 \
             --direction $direction
+        else
+            echo Found node embeddings: $outfile\. Skipping.
+        fi
         done
     done
 done
