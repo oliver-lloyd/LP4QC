@@ -1,0 +1,9 @@
+data/raw/mr-eve-mr.csv
+data/raw/mr-eve-mr.csv.gz
+data/processed/mr-eve-edgelist.csv
+data/processed/mr-eve-edgelist.csv.gz
+analysis/node2vec/*/embeds
+.DS_Store
+analysis/spectral/consortia_overlap/ldsc
+analysis/spectral/consortia_overlap/test
+analysis/spectral/consortia_overlap/vcfs
