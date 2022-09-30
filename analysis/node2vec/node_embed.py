@@ -24,6 +24,8 @@ if args.weight_var:
 elif 'weight' not in edgelist.columns:
     raise ValueError('Either "weight" column must exist in edgelist, or pass name of weight column with --weight_var')
 edgelist = edgelist[['head_node', 'tail_node', 'weight']]
+edgelist.weight.loc[edgelist.weight == 0] += 0.001  # Can't have 0 weights in node2vec
+assert 0 not in edgelist.weight.values
 
 # Prepare graph
 if args.direction == 'forwards':
