@@ -9,16 +9,22 @@ do
     do
         for direction in forwards backwards
         do
-            python ../node_embed.py \
-            REPLACE_ME_WITH_PATH_TO_TARGET_EDGELIST \
-            --weight_var REPLACE_ME_WITH_TARGET_WEIGHT_COLUMN_IN_EDGELIST \
-            --out_dir embeds/nodes \
-            --p $p \
-            --q $q \
-            --dimensions 64 \
-            --walk_length 25 \
-            --walks_per_node 10 \
-            --direction $direction
+            outfile=$direction\_p$p\_q$q\.nodevectors
+            if ! ls embeds/nodes | grep $outfile
+            then
+                python ../node_embed.py \
+                REPLACE_ME_WITH_PATH_TO_TARGET_EDGELIST \
+                --weight_var REPLACE_ME_WITH_TARGET_WEIGHT_COLUMN_IN_EDGELIST \
+                --out_dir embeds/nodes \
+                --p $p \
+                --q $q \
+                --dimensions 64 \
+                --walk_length 25 \
+                --walks_per_node 10 \
+                --direction $direction
+            else
+                echo Found node embeddings: $outfile\. Skipping.
+            fi
         done
     done
 done

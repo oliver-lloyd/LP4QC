@@ -11,7 +11,7 @@ do
 
     # Get edge vectors via all 5 methods 
     outfile_suffix=$pq\.edgevectors
-    python ../edge_embed.py embeds/nodes/$forwards_walk_file embeds/nodes/$backwards_walk_file all --out_name outfile_suffix
+    python ../edge_embed.py embeds/nodes/$forwards_walk_file embeds/nodes/$backwards_walk_file all --out_name $outfile_suffix
     
     # Store output
     mv *$outfile_suffix embeds/edges
