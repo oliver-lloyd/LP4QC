@@ -31,8 +31,6 @@ def assess_model_fit(embedding_file, embedding_path, edges_df, out_file):
         csv_string = ','.join([str(val) for val in [method, p, q, r2]])
         with open(out_file, 'a') as f:
             f.write(csv_string + '\n')
-    else:
-        print('Skip')
 
 
 if __name__ == '__main__':
@@ -65,4 +63,8 @@ if __name__ == '__main__':
 
     # Assess regression fit of edge weight on edge vector 
     with mp.Pool(mp.cpu_count()) as pool:
-        results = pool.starmap(assess_model_fit, para_args)
+        pool.starmap(assess_model_fit, para_args)
+
+    # Re-write results in order of descending R2
+    results = pd.read_csv(result_file).sort_values('R2', ascending=False)
+    results.to_csv(result_file, index=False)
