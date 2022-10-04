@@ -1,6 +1,6 @@
 import multiprocessing as mp
 import pandas as pd
-from os import system,
+from os import system
 
 def get_vcf(gwas_id):
     url = f'https://gwas.mrcieu.ac.uk/files/{gwas_id}/{gwas_id}.vcf.gz'
@@ -17,4 +17,5 @@ if __name__ == '__main__':
     for i, row in gwas.iterrows():
         vcf_file = f'{row.id}.vcf.gz'
         consort_str = row.consortium.replace(" ", "_")
-        system(f'mv {vcf_file} vcfs/{consort_str}_{vcf_file}')
+        population_str = row.population.replace(" ", "_")
+        system(f'mv {vcf_file} vcfs/{consort_str}_{population_str}_{vcf_file}')
