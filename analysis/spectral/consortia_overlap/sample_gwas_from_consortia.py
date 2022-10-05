@@ -1,14 +1,13 @@
 import pandas as pd
 from numpy.random import choice
 
-node_traits = pd.read_csv('../../data/raw/attributes/node_attributes.csv')
+node_traits = pd.read_csv('../../../data/raw/node_attributes/node_attributes.csv')
 
 sampled = []
-for consortium in node_traits.consortium.unique():
-    if pd.notna(consortium):
-        sub_df = node_traits.loc[node_traits.consortium == consortium]
-        index = choice(sub_df.index)
-        gwas = sub_df.loc[index]
+for consortium, cons_df in node_traits.groupby('consortium'):
+    for population, cons_pop_df in cons_df.groupby('population'):
+        index = choice(cons_pop_df.index)
+        gwas = cons_pop_df.loc[index]
         sampled.append(gwas)
 
 out_df = pd.DataFrame(sampled)
