@@ -12,9 +12,13 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('n_nodes', type=int)
+    parser.add_argument('--out_name', type=str)
     args = parser.parse_args()
 
-    out_name = f'../subgraphs/mreve_{args.n_nodes}_nodes.csv'
+    if not args.out_name:
+        out_name = f'mreve_{args.n_nodes}_nodes.csv'
+    else:
+        out_name = args.out_name
 
     # Check for intended overwrite
     if glob(out_name):
