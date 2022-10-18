@@ -5,6 +5,7 @@ from time import sleep
 from os import listdir
 from itertools import combinations
 from random import shuffle
+from numpy import abs
 
 with open('../../data/raw/trait_IDs.txt') as f:
     traits = f.read().split('\n')[:-1]
@@ -17,7 +18,7 @@ out_file = 'gen_cor.csv'
 try:
     gen_cor = pd.read_csv(out_file)
 except FileNotFoundError:
-    gen_cor = pd.DataFrame(columns=['trait1', 'trait2', 'rg', 'rg_SE'])
+    gen_cor = pd.DataFrame(columns=['head_node', 'tail_node', 'rg', 'rg_SE'])
     gen_cor.to_csv(out_file, index=False)
 for i, trait in enumerate(traits):
     if trait not in gen_cor.trait1.values:
@@ -31,7 +32,9 @@ for i, trait in enumerate(traits):
         else:
             print(i, 'No results')
             to_store = [[trait, None, None, None]]
-        pd.DataFrame(to_store).to_csv(out_file, index=False, mode='a', header=None)
+        out = pd.DataFrame(to_store)
+        out['abs_rg'] = abs(out.rg)
+        out.to_csv(out_file, index=False, mode='a', header=None)
 
 
 # Get observation correlation data 
@@ -39,7 +42,7 @@ out_file = 'obs_cor.csv'
 try:
     obs_cor = pd.read_csv(out_file)
 except FileNotFoundError:
-    obs_cor = pd.DataFrame(columns=['trait1', 'trait2', 'cor'])
+    obs_cor = pd.DataFrame(columns=['head_node', 'tail_node', 'ro'])
     obs_cor.to_csv(out_file, index=False)
 for i, trait in enumerate(traits):
     if trait not in obs_cor.trait1.values:
@@ -53,7 +56,9 @@ for i, trait in enumerate(traits):
         else:
             print(i, 'No results')
             to_store = [[trait, None, None]]
-        pd.DataFrame(to_store).to_csv(out_file, index=False, mode='a', header=None)
+        out = pd.DataFrame(to_store)
+        out['abs_ro'] = abs(out.ro)
+        out.to_csv(out_file, index=False, mode='a', header=None)
 
 
 # Get pairwise literature data (quadratic complexity so only do for nodes for whom we have oc and gc data)
