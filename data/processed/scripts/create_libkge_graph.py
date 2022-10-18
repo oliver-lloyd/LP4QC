@@ -15,8 +15,7 @@ for edgelist_path in args.binary_edgelists:
     temp_df = pd.read_csv(edgelist_path)
     out_edges = out_edges.append(temp_df)
 
-# Shuffle then split data
-
+# Split data
 train, test_valid = train_test_split(out_edges, test_size=1-args.train_proportion, stratify=out_edges.relation)
 test, valid = train_test_split(test_valid, test_size=0.5, stratify=test_valid.relation)
 
