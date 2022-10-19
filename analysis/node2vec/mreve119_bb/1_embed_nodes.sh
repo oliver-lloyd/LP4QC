@@ -13,7 +13,7 @@ do
             if ! ls embeds/nodes | grep $outfile
             then
                 python ../node_embed.py \
-                ../../data/processed/subgraphs/mreve_119_nodes_bb.csv \
+                ../../../data/processed/subgraphs/mreve_119_nodes_bb.csv \
                 --weight_var abs_effect \
                 --out_dir embeds/nodes \
                 --p $p \
